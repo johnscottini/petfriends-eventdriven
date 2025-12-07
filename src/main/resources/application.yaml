@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: petfriends-eventsourcing
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/petfriends
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+      show-sql: true
+
+axon:
+  axonserver:
+    enabled: true
+    servers: localhost:8124
+  eventhandling:
+    processors:
+      default:
+        mode: subscribing
