@@ -23,12 +23,4 @@ public class EstoqueEntity {
 
     @Embedded
     private Dimensoes dimensoes;
-
-    public void baixarEstoque(int quantidade) {
-        this.quantidadeDisponivel = Math.max(0, this.quantidadeDisponivel - quantidade);
-    }
-
-    public void reporEstoque(int quantidade) {
-        this.quantidadeDisponivel += quantidade;
-    }
 }

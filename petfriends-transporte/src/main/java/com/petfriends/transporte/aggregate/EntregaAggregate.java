@@ -6,10 +6,13 @@ import com.petfriends.transporte.commands.DespacharEntregaCommand;
 import com.petfriends.transporte.events.EntregaConcluidaEvent;
 import com.petfriends.transporte.events.EntregaCriadaEvent;
 import com.petfriends.transporte.events.EntregaDespachadaEvent;
+import com.petfriends.transporte.query.EnderecoEntrega;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
+import org.axonframework.modelling.command.AggregateCreationPolicy;
 import org.axonframework.modelling.command.AggregateIdentifier;
+import org.axonframework.modelling.command.CreationPolicy;
 import org.axonframework.spring.stereotype.Aggregate;
 
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
@@ -22,12 +25,13 @@ public class EntregaAggregate {
     private String entregaId;
 
     private String pedidoId;
-    private String enderecoEntrega;
+    private EnderecoEntrega enderecoEntrega;
     private boolean despachada;
     private boolean concluida;
 
     @CommandHandler
-    public EntregaAggregate(CriarEntregaCommand command) {
+    @CreationPolicy(AggregateCreationPolicy.ALWAYS)
+    public void handle(CriarEntregaCommand command) {
         apply(new EntregaCriadaEvent(
                 command.getId(),
                 command.getPedidoId(),
@@ -39,7 +43,14 @@ public class EntregaAggregate {
     public void on(EntregaCriadaEvent event) {
         this.entregaId = event.getId();
         this.pedidoId = event.getPedidoId();
-        this.enderecoEntrega = event.getEnderecoEntrega();
+        var enderecoVO = new EnderecoEntrega(
+                event.getEnderecoEntrega().getRua(),
+                event.getEnderecoEntrega().getNumero(),
+                event.getEnderecoEntrega().getCidade(),
+                event.getEnderecoEntrega().getEstado(),
+                event.getEnderecoEntrega().getCep()
+        );
+        this.enderecoEntrega = enderecoVO;
         this.despachada = false;
         this.concluida = false;
     }

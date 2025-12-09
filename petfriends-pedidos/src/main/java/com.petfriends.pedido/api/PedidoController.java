@@ -1,7 +1,9 @@
 package com.petfriends.pedido.api;
 
+import com.petfriends.contracts.pedido.EnderecoEntregaMessage;
 import com.petfriends.pedido.commands.ConfirmarPedidoCommand;
 import com.petfriends.pedido.commands.CriarPedidoCommand;
+import com.petfriends.pedido.commands.PedidoProntoParaEnvioCommand;
 import com.petfriends.pedido.dto.CriarPedidoRequest;
 import com.petfriends.pedido.query.enums.StatusPedido;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +29,18 @@ public class PedidoController {
                 pedidoId,
                 req.getClienteId(),
                 req.getItens(),
-                StatusPedido.AGUARDANDO_PAGAMENTO
+                StatusPedido.AGUARDANDO_PAGAMENTO,
+                req.getValorTotal()
         ));
     }
 
     @PostMapping("/{pedidoId}/confirmar")
     public CompletableFuture<String> confirmarPedido(@PathVariable String pedidoId) {
         return commandGateway.send(new ConfirmarPedidoCommand(pedidoId));
+    }
+
+    @PostMapping("/{pedidoId}/pronto-para-envio")
+    public CompletableFuture<String> prontoParaEnviarPedido(@PathVariable String pedidoId, @RequestBody EnderecoEntregaMessage enderecoDto) {
+        return commandGateway.send(new PedidoProntoParaEnvioCommand(pedidoId, enderecoDto));
     }
 }

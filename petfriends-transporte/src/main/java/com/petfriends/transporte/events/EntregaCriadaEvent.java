@@ -1,5 +1,6 @@
 package com.petfriends.transporte.events;
 
+import com.petfriends.contracts.pedido.EnderecoEntregaMessage;
 import events.BaseEvent;
 import lombok.Getter;
 
@@ -7,9 +8,9 @@ import lombok.Getter;
 public class EntregaCriadaEvent extends BaseEvent {
 
     private final String pedidoId;
-    private final String enderecoEntrega;
+    private final EnderecoEntregaMessage enderecoEntrega;
 
-    public EntregaCriadaEvent(String id, String pedidoId, String enderecoEntrega) {
+    public EntregaCriadaEvent(String id, String pedidoId, EnderecoEntregaMessage enderecoEntrega) {
         super(id);
         this.pedidoId = pedidoId;
         this.enderecoEntrega = enderecoEntrega;

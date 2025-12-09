@@ -1,17 +1,13 @@
 package com.petfriends.pedido.query;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
-@Value
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ItemPedido {
-
-    String produtoId;
-    int quantidade;
-    BigDecimal precoUnitario;
-
-    public BigDecimal calcularTotal() {
-        return precoUnitario.multiply(BigDecimal.valueOf(quantidade));
-    }
+    private String produtoId;
+    private Integer quantidade;
 }

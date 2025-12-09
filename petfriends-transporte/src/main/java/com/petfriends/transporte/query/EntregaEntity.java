@@ -1,10 +1,7 @@
 package com.petfriends.transporte.query;
 
 import com.petfriends.transporte.query.enums.StatusEntrega;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,12 +18,9 @@ public class EntregaEntity {
 
     private String pedidoId;
 
+    @Enumerated(EnumType.STRING)
     private StatusEntrega statusEntrega;
 
     @Embedded
     private EnderecoEntrega endereco;
-
-    public void atualizarStatus(StatusEntrega newStatus) {
-        this.statusEntrega = newStatus;
-    }
 }

@@ -25,8 +25,4 @@ public class PedidoEntity {
     private StatusPedido status;
 
     private BigDecimal valorTotal;
-
-    public void atualizarStatus(StatusPedido novoStatus) {
-        this.status = novoStatus;
-    }
 }
